@@ -1,0 +1,25 @@
+{
+    "name": "yangjisen/laravel-executed",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yang Ji Sen",
+            "email": "381722452@qq.com"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "YangJiSen\\LaravelExecuted\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "YangJiSen\\LaravelExecuted\\ServiceProvider"
+            ]
+        }
+    }
+}
