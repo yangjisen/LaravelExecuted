@@ -23,7 +23,7 @@ class QueryListener
         if (config('database.debug', false)) {
             $bindings = $this->prepareBindings($event->bindings);
             $queryStr = Str::replaceArray('?', $bindings, $event->sql);
-            Log::channel('sql')->info($queryStr);
+            Log::channel('sql')->info("({$event->time})\t$queryStr");
         }
     }
 
