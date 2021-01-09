@@ -23,11 +23,8 @@ class ServiceProvider extends EventServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/database.php','database');
         $this->mergeConfigFrom(__DIR__.'/logging.php','logging.channels');
-    }
-
-    public function boot()
-    {
-        parent::boot();
+		
+		parent::register();
     }
 
 }
