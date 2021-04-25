@@ -23,8 +23,8 @@ class QueryListener
             $time = $event->time;
 
             if ($caller = $this->getCallerFromStackTrace()) {
-                Log::channel('sql')->info("{$caller['file']}\t{$caller['line']}");
-                Log::channel('sql')->info("({$this->transformTime($time)})\t" . $this->replaceBindings($event));
+                $file = basename($caller['file']);
+                Log::channel('sql')->info("{$file}({$caller['line']})[{$this->transformTime($time)}]\t{$this->replaceBindings($event)}");
             }
         }
     }
