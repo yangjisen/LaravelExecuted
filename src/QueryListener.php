@@ -4,13 +4,13 @@
 namespace YangJiSen\LaravelExecuted;
 
 use Illuminate\Database\Events\QueryExecuted;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class QueryListener
 {
+    use transformTime;
+
     /**
      * Handle the event.
      *
@@ -20,11 +20,11 @@ class QueryListener
     public function handle(QueryExecuted $event)
     {
         if (config('database.debug', false)) {
-            $time = $event->time;
+            $time = $this->transformTime($event->time);
 
             if ($caller = $this->getCallerFromStackTrace()) {
                 $file = basename($caller['file']);
-                Log::channel('sql')->info("{$file}({$caller['line']})[{$this->transformTime($time)}]\t{$this->replaceBindings($event)}");
+                Log::channel('exec_sql')->info("{$file}({$caller['line']})[{$time}]\t{$this->replaceBindings($event)}");
             }
         }
     }
@@ -97,15 +97,6 @@ class QueryListener
         if (! ($this->options['ignore_packages'] ?? true)) {
             return 'laravel';
         }
-    }
-
-    protected function transformTime($time)
-    {
-        if($time > 1000) {
-            return number_format($time/1000, 2, '.', '').'s';
-        }
-
-        return number_format($time, 2, '.', '').'ms';
     }
 
 }
