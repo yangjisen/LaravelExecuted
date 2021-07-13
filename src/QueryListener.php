@@ -22,6 +22,9 @@ class QueryListener
         if (config('database.debug', false)) {
             $time = $this->transformTime($event->time);
 
+			/* 排除 telescope */
+            if($this->ignoredTelescope($event)) return;
+
             if ($caller = $this->getCallerFromStackTrace()) {
                 $file = basename($caller['file']);
                 Log::channel('exec_sql')->info("{$file}({$caller['line']})[{$time}]\t{$this->replaceBindings($event)}");
@@ -97,6 +100,15 @@ class QueryListener
         if (! ($this->options['ignore_packages'] ?? true)) {
             return 'laravel';
         }
+    }
+	
+	/**
+     * @param \Illuminate\Database\Events\QueryExecuted $event
+     * @return bool
+     */
+    protected function ignoredTelescope($event)
+    {
+        return Str::of($event->sql)->lower()->contains('telescope_');
     }
 
 }
