@@ -4,7 +4,7 @@
 namespace YangJiSen\LaravelExecuted;
 
 
-trait transformTime
+trait TransformTime
 {
     /**
      * @param $time

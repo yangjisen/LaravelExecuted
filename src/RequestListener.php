@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class RequestListener
 {
-    use transformTime;
+    use TransformTime;
 
     /**
      * Handle the event.
